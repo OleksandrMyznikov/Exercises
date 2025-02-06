@@ -31,13 +31,22 @@ package org.example.exercises
  */
 fun maxVowels(s: String, k: Int): Int {
     val vowels = mutableSetOf('a', 'e', 'i', 'o', 'u')
-    var maxVowels = 0
-    for (i in 0..s.length - k) {
-        var currentVowels = 0
-        for (j in 0..<k) {
-            if (vowels.contains(s[i+j])) {
-                currentVowels++
-            }
+    var currentVowels = k
+    var maxVowels: Int
+    for (i in 0 until k) {
+        if (!vowels.contains(s[i])) {
+            currentVowels--
+        }
+    }
+    maxVowels = currentVowels
+
+    for (j in k until s.length) {
+        val startChar = s[j - k]
+        if (vowels.contains(startChar)) {
+            currentVowels--
+        }
+        if (vowels.contains(s[j])) {
+            currentVowels++
         }
         if (maxVowels < currentVowels) {
             maxVowels = currentVowels
@@ -48,6 +57,8 @@ fun maxVowels(s: String, k: Int): Int {
 }
 
 fun main() {
+
     println(maxVowels("abciiidef", 3))
+    println(maxVowels("aeiou", 2))
     println(maxVowels("leetcode", k = 3))
 }
